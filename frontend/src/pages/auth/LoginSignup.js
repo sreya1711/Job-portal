@@ -38,51 +38,69 @@ const LoginSignup = () => {
 
     setLoading(true);
 
-    try {
-      let response;
-      if (formData.isLogin) {
-        // Login
-        response = await apiLogin({
-          email: formData.email,
-          password: formData.password,
-        });
-      } else {
-        // Signup
-        response = await apiRegister({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-          company: formData.role === 'employer' ? formData.company : undefined,
-          department: formData.role === 'admin' ? formData.department : undefined,
-        });
-      }
+  try {
+  let response;
 
-      // Login the user in the context
-      login(response.user, response.token);
+  if (formData.isLogin) {
+    // LOGIN
+    response = await apiLogin({
+      email: formData.email,
+      password: formData.password,
+    });
+  } else {
+    // SIGNUP
+    response = await apiRegister({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role,
+      company: formData.role === "employer" ? formData.company : undefined,
+      department:
+        formData.role === "admin" ? formData.department : undefined,
+    });
+  }
 
-      toast.success(formData.isLogin ? 'Logged in successfully!' : 'Account created successfully!');
+  console.log("AUTH RESPONSE =", response.data);
 
-      // Redirect to role-based dashboard
-      switch (response.user.role) {
-        case 'jobseeker':
-          navigate('/jobseeker/dashboard');
-          break;
-        case 'employer':
-          navigate('/employer/dashboard');
-          break;
-        case 'admin':
-          navigate('/admin/dashboard');
-          break;
-        default:
-          navigate('/');
-      }
-    } catch (error) {
-      console.error('Auth error:', error);
-      toast.error(error.message || 'An error occurred during authentication');
-    } finally {
-      setLoading(false);
-    }
+  // Extract based on backend format
+  const user = response.data.user;
+  const token = response.data.token;
+  const message = response.data.message || "Success!";
+
+  // Save user + token globally
+  login(user, token);
+
+  // Success toast
+  toast.success(message);
+
+  // Redirect based on user role
+  switch (user.role) {
+    case "jobseeker":
+      navigate("/jobseeker/dashboard");
+      break;
+    case "employer":
+      navigate("/employer/dashboard");
+      break;
+    case "admin":
+      navigate("/admin/dashboard");
+      break;
+    default:
+      navigate("/");
+  }
+} catch (error) {
+  console.error("Auth error:", error);
+
+  // Extract backend error message safely
+  const errMsg =
+    error.response?.data?.message ||
+    error.message ||
+    "Authentication failed";
+
+  toast.error(errMsg);
+} finally {
+  setLoading(false);
+}
+
   };
 
   const toggleMode = () => {
@@ -297,4 +315,4 @@ const LoginSignup = () => {
   );
 };
 
-export default LoginSignup;
+export default LoginSignup; 
