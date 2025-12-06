@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Briefcase, Building2, Users, CheckCircle, TrendingUp, Star, ArrowRight, Zap, Award, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
-import LoginSignup from '../pages/auth/LoginSignup.js'; // Adjust the import path as needed
+import {
+  Briefcase, Building2, Users, CheckCircle, TrendingUp,
+  Star, ArrowRight, Zap, Award, Globe,
+  ChevronLeft, ChevronRight, X
+} from 'lucide-react';
+import LoginSignup from '../pages/auth/LoginSignup.js'; 
 
 function Home() {
   const [searchJob, setSearchJob] = useState('');
@@ -75,36 +79,51 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
 
-      {/* Hero Section */}
+      {/* HERO SECTION */}
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="text-center mb-16">
           <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-6 py-2 rounded-full border border-white/20 mb-8 shadow-lg">
             <Star className="w-4 h-4 text-yellow-500 mr-2" />
             <span className="text-sm font-medium text-gray-700">Trusted by 50,000+ professionals</span>
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
             Land Your 
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-pulse">
               Dream Career
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Connect with world-class companies and unlock opportunities that match your ambitions. 
-            <span className="font-semibold text-gray-800"> Your future starts here.</span>
-          </p>
-          
+
           {/* Search Bar */}
           <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 max-w-4xl mx-auto">
-           
-           
+            <input
+              type="text"
+              placeholder="Search job title..."
+              value={searchJob}
+              onChange={(e) => {
+                setSearchJob(e.target.value);
+                handleSearch();
+              }}
+              className="px-6 py-4 w-full md:w-1/2 rounded-2xl shadow-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+
+            <input
+              type="text"
+              placeholder="Location..."
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
+              className="px-6 py-4 w-full md:w-1/3 rounded-2xl shadow-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+
+            <button
+              onClick={handleSearch}
+              className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all duration-300 shadow-lg"
+            >
+              Search
+            </button>
           </div>
+
           {searchJob && (
             <div className="mt-4 max-w-4xl mx-auto bg-white/90 rounded-lg shadow-lg p-4">
               <p className="text-gray-600">Suggested: {filteredCategories.map(c => c.name).join(', ')}</p>
@@ -115,10 +134,10 @@ function Home() {
         {/* Animated Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {stats.map((stat, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 hover:shadow-xl hover:scale-105 transition-all duration-300 ${animateStats ? 'animate-slide-up' : ''}`}
-              style={{ animationDelay: `${index * 200}ms`, animationDuration: '1s', animationFillMode: 'both' }}
+              style={{ animationDelay: `${index * 200}ms` }}
             >
               <div className={`${stat.bg} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4`}>
                 <stat.icon className={`w-8 h-8 ${stat.color}`} />
@@ -130,15 +149,16 @@ function Home() {
         </div>
       </div>
 
-      {/* Features Section */}
+      {/* ================= FEATURES ================= */}
       <div className="container mx-auto px-4 mb-20">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-black text-gray-900 mb-4">Why Choose Us?</h2>
           <p className="text-xl text-gray-600">Discover the tools and opportunities to elevate your career</p>
         </div>
+
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20 hover:shadow-xl hover:scale-105 transition-all duration-300 text-center">
+            <div key={index} className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20 hover:scale-105 transition-all duration-300 text-center">
               <div className="bg-gradient-to-br from-blue-500 to-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <feature.icon className="w-8 h-8 text-white" />
               </div>
@@ -149,172 +169,141 @@ function Home() {
         </div>
       </div>
 
-      {/* Featured Companies Section */}
-      <div className="container mx-auto px-4 mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Trusted by Leading Companies</h2>
-          <p className="text-xl text-gray-600">Partnered with the best in the industry</p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {companies.map((company, index) => (
-            <div key={index} className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 text-center">
-              <img src={company.logo} alt={`${company.name} logo`} className="h-16 mx-auto mb-4" />
-              <p className="text-gray-800 font-semibold">{company.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Enhanced Categories */}
+      {/* ================== CATEGORIES ================== */}
       <div className="container mx-auto px-4 mb-20">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-black text-gray-900 mb-4">Trending Job Categories</h2>
-          <p className="text-xl text-gray-600">Explore opportunities across high-demand industries</p>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredCategories.map((category, index) => (
             <div
               key={index}
-              className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20 hover:shadow-2xl transition-all duration-300 cursor-pointer relative overflow-hidden"
+              className="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20 hover:shadow-2xl transition-all duration-300 cursor-pointer relative"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-              <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">{category.icon}</div>
+              <div className="text-5xl mb-4">{category.icon}</div>
               <h3 className="font-bold text-gray-800 mb-2 text-lg">{category.name}</h3>
               <p className="text-gray-600 mb-2">{category.count}</p>
               <div className="flex items-center text-green-600">
                 <TrendingUp className="w-4 h-4 mr-1" />
                 <span className="text-sm font-semibold">{category.trend}</span>
               </div>
-              <ArrowRight className="absolute top-8 right-8 w-5 h-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Testimonials */}
+      {/* ================= TESTIMONIALS ================= */}
       <div className="container mx-auto px-4 mb-20">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-black text-gray-900 mb-4">Success Stories</h2>
-          <p className="text-xl text-gray-600">Join thousands who found their dream careers</p>
+          <h2 className="text-4xl font-black">Success Stories</h2>
         </div>
+
         <div className="max-w-4xl mx-auto relative">
-          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-12 shadow-lg border border-white/20 text-center">
-            <div className="text-6xl mb-6">"</div>
-            <p className="text-2xl text-gray-700 mb-8 font-medium leading-relaxed">
+          <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-12 shadow-lg">
+            <p className="text-2xl text-gray-700 mb-8 font-medium">
               {testimonials[currentTestimonial].text}
             </p>
+
             <div className="flex items-center justify-center space-x-4">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
                 {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
               </div>
+
               <div className="text-left">
                 <div className="font-bold text-gray-800 text-lg">{testimonials[currentTestimonial].name}</div>
-                <div className="text-gray-600">{testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}</div>
+                <div className="text-gray-600">
+                  {testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}
+                </div>
               </div>
             </div>
+
             <div className="flex justify-center mt-8 space-x-2">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => handleTestimonialChange(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 rounded-full transition-all ${
                     index === currentTestimonial ? 'bg-blue-600 w-8' : 'bg-gray-300'
                   }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
                 ></button>
               ))}
             </div>
           </div>
+
+          {/* Previous */}
           <button
             onClick={() => handleTestimonialChange((currentTestimonial - 1 + testimonials.length) % testimonials.length)}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
-            aria-label="Previous testimonial"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
           >
             <ChevronLeft className="w-6 h-6 text-gray-600" />
           </button>
+
+          {/* Next */}
           <button
             onClick={() => handleTestimonialChange((currentTestimonial + 1) % testimonials.length)}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
-            aria-label="Next testimonial"
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg"
           >
             <ChevronRight className="w-6 h-6 text-gray-600" />
           </button>
         </div>
       </div>
-      {/* Enhanced CTA */}
+
+      {/* CTA */}
       <div className="container mx-auto px-4 mb-20">
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-white text-center shadow-2xl overflow-hidden relative">
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="relative z-10">
-            <h2 className="text-4xl font-black mb-6">Ready to Transform Your Career?</h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
-              Join the revolution. Connect with opportunities that align with your passion and expertise.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="bg-white text-gray-800 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg">
-                Explore All Jobs
-              </button>
-              <button
-                onClick={() => setShowLoginSignup(true)}
-                className="border-2 border-white text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-gray-800 transition-all duration-300 hover:scale-105"
-              >
-                Get Started
-              </button>
-            </div>
+        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 text-white text-center shadow-2xl relative">
+          <h2 className="text-4xl font-black mb-6">Ready to Transform Your Career?</h2>
+          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+            Join the revolution. Connect with opportunities that align with your passion.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button className="bg-white text-gray-800 px-10 py-4 rounded-2xl font-bold hover:bg-gray-100">
+              Explore All Jobs
+            </button>
+
+            <button
+              onClick={() => setShowLoginSignup(true)}
+              className="border-2 border-white text-white px-10 py-4 rounded-2xl font-bold hover:bg-white hover:text-gray-800"
+            >
+              Get Started
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Login/Signup Modal */}
+      {/* LOGIN / SIGNUP MODAL */}
       {showLoginSignup && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95 animate-modal-in">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full relative animate-modal-in">
             <button
               onClick={() => setShowLoginSignup(false)}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              aria-label="Close modal"
             >
               <X className="w-6 h-6" />
             </button>
-            <LoginSignup onSwitchToOther={() => {}} />
+
+            <LoginSignup />
           </div>
         </div>
       )}
 
-      {/* Custom CSS for Animations */}
-      <style>
-        {`
-          @keyframes slide-up {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
+      {/* Animations */}
+      <style>{`
+        @keyframes slide-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
 
-          .animate-slide-up {
-            animation: slide-up 0.5s ease-out forwards;
-          }
+        @keyframes modal-in {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-modal-in { animation: modal-in .3s ease-out forwards; }
+      `}</style>
 
-          @keyframes modal-in {
-            from {
-              opacity: 0;
-              transform: scale(0.95);
-            }
-            to {
-              opacity: 1;
-              transform: scale(1);
-            }
-          }
-
-          .animate-modal-in {
-            animation: modal-in 0.3s ease-out forwards;
-          }
-        `}
-      </style>
     </div>
   );
 }
