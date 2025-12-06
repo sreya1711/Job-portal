@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with baseURL and credentials
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://job-portal-wwfk.onrender.com',
   withCredentials: true,
 });
 

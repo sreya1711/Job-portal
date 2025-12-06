@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 
 // Derive socket server from API URL but strip trailing /api
-const RAW_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const RAW_BASE = process.env.REACT_APP_API_URL || 'https://job-portal-wwfk.onrender.com';
 const SOCKET_SERVER = RAW_BASE.replace(/\/?api\/?$/, '');
 
 class NotificationService {
