@@ -5,21 +5,21 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 import { Server as SocketIOServer } from 'socket.io';
-import connectDB from './config/db.js';
+import connectDB from './src/config/db.js';
 
-import authRoutes from './routes/auth.js';
-import jobsRoutes from './routes/jobs.js';
-import applicationRoutes from './routes/application.js';
-import employerRoutes from './routes/employer.js';
-import jobSeekerRoutes from './routes/jobSeeker.js';
-import adminRoutes from './routes/admin.js';
-import employeeRoutes from './routes/employee.js';
-import profileRoutes from './routes/profile.js';
-import messagesRoutes from './routes/messages.js';
-import interviewsRoutes from './routes/interviews.js';
-import feedbackRoutes from './routes/feedback.js';
+import authRoutes from './src/routes/auth.js';
+import jobsRoutes from './src/routes/jobs.js';
+import applicationRoutes from './src/routes/application.js';
+import employerRoutes from './src/routes/employer.js';
+import jobSeekerRoutes from './src/routes/jobSeeker.js';
+import adminRoutes from './src/routes/admin.js';
+import employeeRoutes from './src/routes/employee.js';
+import profileRoutes from './src/routes/profile.js';
+import messagesRoutes from './src/routes/messages.js';
+import interviewsRoutes from './src/routes/interviews.js';
+import feedbackRoutes from './src/routes/feedback.js';
 
-import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import { notFound, errorHandler } from './src/middleware/errorMiddleware.js';
 
 dotenv.config();
 
